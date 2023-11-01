@@ -9,3 +9,6 @@ build: up
 
 lint:
 	docker compose run --rm php-fpm composer lint
+
+test:
+	docker compose run --rm php-fpm composer test
