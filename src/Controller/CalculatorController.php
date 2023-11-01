@@ -9,6 +9,7 @@ use App\Service\DTOService;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,7 +17,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/api')]
-final readonly class CalculatorController extends AbstractController
+final class CalculatorController extends AbstractController
 {
     public function __construct(
         private CalculatorService $calculatorService,
@@ -42,12 +43,12 @@ final readonly class CalculatorController extends AbstractController
     )]
     public function calculate(Request $request): Response
     {
-        $dto = $this->dtoService->getData($request, CalculatorDTO::class);
-
         try {
+            $dto = $this->dtoService->getData($request, CalculatorDTO::class);
+
             $data = $this->calculatorService->calculate($dto);
         } catch (\Throwable $e) {
-            return $this->error($e->getMessage());
+            return new JsonResponse(['error' => $e->getMessage()], 500);
         }
 
         return new Response($this->serializer->serialize($data, JsonEncoder::FORMAT), Response::HTTP_OK);

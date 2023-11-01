@@ -8,19 +8,23 @@ use App\Service\DTOService;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/api')]
-final readonly class AgeCalculatorController extends AbstractController
+final class AgeCalculatorController extends AbstractController
 {
     public function __construct(
         private AgeCalculatorService $ageCalculatorService,
         private DTOService $dtoService,
-        private SerializerInterface $serializer
+        private SerializerInterface $serializer,
+        private readonly ValidatorInterface $validator,
     ) {
     }
 
@@ -40,14 +44,34 @@ final readonly class AgeCalculatorController extends AbstractController
     )]
     public function calculate(Request $request): Response
     {
-        $dto = $this->dtoService->getData($request, AgeCalculatorDTO::class);
-
         try {
+            $dto = $this->dtoService->getData($request, AgeCalculatorDTO::class);
+
+            $errors = $this->validator->validate($dto);
+
+            if ($errors->count() > 0) {
+                return new JsonResponse(['error validation' => $this->getErrorMessages($errors)], 400);
+            }
+
             $data = $this->ageCalculatorService->calculateAge($dto);
         } catch (\Throwable $e) {
-            return $this->error($e->getMessage());
+            return new JsonResponse(['error' => $e->getMessage()], 500);
         }
 
         return new Response($this->serializer->serialize($data, JsonEncoder::FORMAT), Response::HTTP_OK);
+    }
+
+    /**
+     * @return array<int<0,max>,string|\Stringable>
+     */
+    private function getErrorMessages(ConstraintViolationListInterface $errors): array
+    {
+        $errorMessages = [];
+
+        foreach ($errors as $error) {
+            $errorMessages[] = $error->getMessage();
+        }
+
+        return $errorMessages;
     }
 }

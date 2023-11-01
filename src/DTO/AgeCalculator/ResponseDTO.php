@@ -11,6 +11,6 @@ final readonly class ResponseDTO
     public function __construct(
         \DateInterval $age,
     ) {
-        $this->age = $age->format('Y');
+        $this->age = $age->format('%y years %m mounth %d days');
     }
 }

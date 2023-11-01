@@ -13,18 +13,20 @@ final readonly class CalculatorService
         $result = $dto->operand1;
 
         switch ($dto->operator) {
-            case Operators::PLUS === $dto->operator:
+            case Operators::PLUS:
                 $result = $result + $dto->operand2;
                 break;
-            case Operators::MINUS === $dto->operator:
+            case Operators::MINUS:
                 $result = $result - $dto->operand2;
                 break;
-            case Operators::DIVIDE === $dto->operator:
-                $result = $result * $dto->operand2;
-                break;
-            case Operators::MULTIPLY === $dto->operator:
+            case Operators::DIVIDE:
                 $result = $result / $dto->operand2;
                 break;
+            case Operators::MULTIPLY:
+                $result = $result * $dto->operand2;
+                break;
+            default:
+                throw new \Exception('Operator not found.');
         }
 
         return new ResponseDTO($result);
