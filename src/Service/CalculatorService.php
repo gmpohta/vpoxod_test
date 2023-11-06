@@ -4,7 +4,7 @@ namespace App\Service;
 
 use App\DTO\Calculator\CalculatorDTO;
 use App\DTO\Calculator\ResponseDTO;
-use App\Enums\Operators;
+use App\Enum\Operators;
 
 final readonly class CalculatorService
 {

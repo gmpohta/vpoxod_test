@@ -11,15 +11,15 @@ final readonly class AgeCalculatorDTO
 {
     public function __construct(
         public \DateTimeImmutable $birthday,
-        public \DateTimeImmutable $calcDate = new \DateTimeImmutable(),
+        public \DateTimeImmutable $dateFrom = new \DateTimeImmutable(),
     ) {
     }
 
     #[Assert\Callback]
     public function validateLocation(ExecutionContextInterface $context): void
     {
-        if ($this->calcDate < $this->birthday) {
-            $context->buildViolation('Birthday must be higter than calcDate')
+        if ($this->dateFrom < $this->birthday) {
+            $context->buildViolation('Birthday must be higter than dateFrom')
                 ->atPath('birthday')
                 ->addViolation();
         }

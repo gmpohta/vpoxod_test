@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\DTO\Calculator;
 
-use App\Enums\Operators;
+use App\Enum\Operators;
 
 final readonly class CalculatorDTO
 {

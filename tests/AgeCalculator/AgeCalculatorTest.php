@@ -18,7 +18,7 @@ final class AgeCalculatorTest extends WebTestCase
         $client = static::createClient();
         $data = [
             'birthday' => '01.01.2000',
-            'calcDate' => '02.05.2020',
+            'dateFrom' => '02.05.2020',
         ];
         $client->request('POST', '/api/age-calculate', [], [], [], json_encode($data, JSON_THROW_ON_ERROR));
         $response = $client->getResponse();
@@ -33,13 +33,13 @@ final class AgeCalculatorTest extends WebTestCase
         $client = static::createClient();
         $data = [
             'birthday' => '01.01.2000',
-            'calcDate' => '02.05.1020',
+            'dateFrom' => '02.05.1020',
         ];
         $client->request('POST', '/api/age-calculate', [], [], [], json_encode($data, JSON_THROW_ON_ERROR));
         $response = $client->getResponse();
 
         $this->assertEquals(400, $response->getStatusCode());
-        $expectedJson = '{"error validation": ["Birthday must be higter than calcDate"]}';
+        $expectedJson = '{"error validation": ["Birthday must be higter than dateFrom"]}';
         $this->assertJsonStringEqualsJsonString($expectedJson, $response->getContent() ? $response->getContent() : '');
     }
 }

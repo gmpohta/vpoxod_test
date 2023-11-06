@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\DTO\AgeCalculator;
 
-final readonly class ResponseDTO
+use App\Shared\DTO\IResponseDTO;
+
+final readonly class ResponseDTO implements IResponseDTO
 {
     public string $age;
 

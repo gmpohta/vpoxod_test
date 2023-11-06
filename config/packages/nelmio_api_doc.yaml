@@ -1,0 +1,8 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: Vpoxod_test
+            description: Test project
+    areas:
+        path_patterns:
+            - ^/api(?!/doc$)

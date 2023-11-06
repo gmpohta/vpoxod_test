@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Enums;
+namespace App\Enum;
 
-use App\Exceptions\InvalidEnumNameException;
+use App\Exception\InvalidEnumNameException;
 
 enum Operators: string
 {

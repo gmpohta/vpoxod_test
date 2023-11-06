@@ -9,7 +9,7 @@ final readonly class AgeCalculatorService
 {
     public function calculateAge(AgeCalculatorDTO $dto): ResponseDTO
     {
-        $age = date_diff($dto->birthday, $dto->calcDate);
+        $age = date_diff($dto->birthday, $dto->dateFrom);
 
         return new ResponseDTO($age);
     }

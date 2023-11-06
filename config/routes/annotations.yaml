@@ -1,0 +1,8 @@
+api:
+    resource: ../../src/Controller/API/
+    prefix: /api
+    name_prefix: api.
+    trailing_slash_on_root: true
+    type: attribute
+    defaults:
+      _format: json
