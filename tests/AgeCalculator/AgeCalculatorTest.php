@@ -24,7 +24,7 @@ final class AgeCalculatorTest extends WebTestCase
         $response = $client->getResponse();
 
         $this->assertEquals(200, $response->getStatusCode());
-        $expectedJson = '{"age": "20 years 4 mounth 1 days"}';
+        $expectedJson = '{"success":true,"data":{"age":"20 years 4 mounth 1 days"},"message":null,"code":200}';
         $this->assertJsonStringEqualsJsonString($expectedJson, $response->getContent() ? $response->getContent() : '');
     }
 
@@ -39,7 +39,7 @@ final class AgeCalculatorTest extends WebTestCase
         $response = $client->getResponse();
 
         $this->assertEquals(400, $response->getStatusCode());
-        $expectedJson = '{"error validation": ["Birthday must be higter than dateFrom"]}';
+        $expectedJson = '{"success":false,"data":["Birthday must be higter than dateFrom"],"message":"error validation"}';
         $this->assertJsonStringEqualsJsonString($expectedJson, $response->getContent() ? $response->getContent() : '');
     }
 }

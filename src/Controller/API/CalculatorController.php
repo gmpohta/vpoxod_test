@@ -12,12 +12,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final class CalculatorController extends BaseController
 {
     public function __construct(
         SerializerInterface $serializer,
         private readonly CalculatorService $calculatorService,
+        private readonly ValidatorInterface $validator,
     ) {
         parent::__construct($serializer);
     }
@@ -41,6 +43,12 @@ final class CalculatorController extends BaseController
     {
         try {
             $dto = $this->getData($request, CalculatorDTO::class);
+
+            $errors = $this->validator->validate($dto);
+
+            if ($errors->count() > 0) {
+                return $this->handleValidationErrors($errors);
+            }
 
             $data = $this->calculatorService->calculate($dto);
         } catch (\Throwable $e) {
