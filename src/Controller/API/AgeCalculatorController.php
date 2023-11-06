@@ -4,7 +4,7 @@ namespace App\Controller\API;
 
 use App\DTO\AgeCalculator\AgeCalculatorDTO;
 use App\DTO\AgeCalculator\ResponseDTO;
-use App\Service\AgeCalculatorService;
+use App\Service\AgeCalculator\AgeCalculatorService;
 use App\Shared\Controller\BaseController;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;

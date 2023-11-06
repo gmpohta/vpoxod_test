@@ -4,7 +4,7 @@ namespace App\Controller\API;
 
 use App\DTO\Calculator\CalculatorDTO;
 use App\DTO\Calculator\ResponseDTO;
-use App\Service\CalculatorService;
+use App\Service\Calculator\CalculatorService;
 use App\Shared\Controller\BaseController;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\AgeCalculator;
 
 use App\DTO\AgeCalculator\AgeCalculatorDTO;
 use App\DTO\AgeCalculator\ResponseDTO;
