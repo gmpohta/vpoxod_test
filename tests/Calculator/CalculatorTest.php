@@ -108,4 +108,20 @@ final class CalculatorTest extends WebTestCase
         $expectedJson = '{"success":true,"data":{"result":0.34210526315789475},"message":null}';
         $this->assertJsonStringEqualsJsonString($expectedJson, $response->getContent() ? $response->getContent() : '');
     }
+
+    public function testDivideByZero(): void
+    {
+        $client = static::createClient();
+        $data = [
+            'operand1' => 13,
+            'operand2' => 0,
+            'operator' => 'DIVIDE',
+        ];
+        $client->request('POST', '/api/calculate', [], [], [], json_encode($data, JSON_THROW_ON_ERROR));
+        $response = $client->getResponse();
+
+        $this->assertEquals(500, $response->getStatusCode());
+        $expectedJson = '{"success":false,"data":[],"message":"Division by zero"}';
+        $this->assertJsonStringEqualsJsonString($expectedJson, $response->getContent() ? $response->getContent() : '');
+    }
 }

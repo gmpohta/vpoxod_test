@@ -74,7 +74,7 @@
             "./vendor/bin/phpstan"
         ],
         "test":[
-            "php bin/phpunit --coverage-html var/coverage_report"
+            "php -d xdebug.mode=coverage bin/phpunit --coverage-html var/coverage_report"
         ],
         "auto-scripts": {
             "cache:clear": "symfony-cmd",

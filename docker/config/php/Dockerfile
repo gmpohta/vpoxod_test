@@ -9,10 +9,12 @@ RUN addgroup -g 1000 app && adduser -u 1000 -G app -s /bin/sh -D app
 
 RUN apk update \
     && apk add pcre-dev zlib-dev autoconf g++ make \
-    libpng libpng-dev libpq-dev icu-dev
+    libpng libpng-dev libpq-dev icu-dev linux-headers
 
 RUN pecl channel-update pecl.php.net \
     && docker-php-ext-install gd opcache intl \
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug \
     && docker-php-source delete \
     && rm -frv /var/cache/apk/*
 
