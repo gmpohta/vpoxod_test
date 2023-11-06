@@ -6,7 +6,7 @@ use App\Enum\Operators;
 
 final class OperationFactory
 {
-    public static function create($operator): Operation
+    public static function create(Operators $operator): Operation
     {
         switch ($operator) {
             case Operators::PLUS:
@@ -18,7 +18,7 @@ final class OperationFactory
             case Operators::MULTIPLY:
                 return new Multiply();
             default:
-                throw new Exception("Unknown operation symbol");
+                throw new \Exception('Unknown operation');
         }
     }
 }
