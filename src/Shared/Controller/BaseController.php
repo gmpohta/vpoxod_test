@@ -74,7 +74,6 @@ abstract class BaseController extends AbstractController
             'success' => true,
             'data' => $data,
             'message' => $message,
-            'code' => $code,
         ];
 
         return new Response($this->serializer->serialize($response, JsonEncoder::FORMAT), $code);

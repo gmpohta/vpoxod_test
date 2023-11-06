@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use App\Exception\InvalidEnumNameException;
 
 final class CalculatorController extends BaseController
 {
@@ -52,7 +53,7 @@ final class CalculatorController extends BaseController
             }
 
             $data = $this->calculatorService->calculate($dto);
-        } catch (\JsonException|NotNormalizableValueException $e) {
+        } catch (\JsonException|NotNormalizableValueException|InvalidEnumNameException $e) {
             return $this->error($e->getMessage(), 400);
         } catch (\Throwable $e) {
             return $this->error($e->getMessage());
